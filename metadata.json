@@ -1,0 +1,8 @@
+{
+  "name": "BaniTwin",
+  "description": "A high-fidelity, physics-informed digital twin for real-time thermal monitoring and dynamic capacity optimization of underground power cables.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-display: 'Chakra Petch', sans-serif;
+    --font-sans: 'Plus Jakarta Sans', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: #0E1117;
+    color: #E0E0E0;
+  }
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.font-mono-tabular {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+input[type="range"].scada-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+input[type="range"].scada-slider::-webkit-slider-runnable-track {
+  background: #1E2530;
+  height: 6px;
+  border-radius: 3px;
+  border: 1px solid #2A3441;
+}
+
+input[type="range"].scada-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  margin-top: -5px;
+  background-color: #00E5FF;
+  height: 14px;
+  width: 14px;
+  border-radius: 2px;
+  border: 1px solid #0E1117;
+  box-shadow: 0 0 8px rgba(0, 229, 255, 0.6);
+  transition: transform 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+input[type="range"].scada-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.18);
+  background-color: #33ECFF;
+}
