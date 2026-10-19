@@ -34,7 +34,7 @@
       .vp-modal{
         background:#111820; color:#E0E0E0;
         border:1px solid rgba(0,229,255,.18);
-        border-radius:16px; max-width:850px; width:100%; /* سایز متعادل شد */
+        border-radius:16px; max-width:850px; width:100%;
         padding:26px 26px 20px; position:relative;
         box-shadow:0 24px 70px rgba(0,0,0,.65), 0 0 0 1px rgba(0,229,255,.05);
         animation:vpRise .3s cubic-bezier(.2,.8,.2,1);
@@ -63,8 +63,8 @@
         margin-bottom:18px; border-radius:10px; overflow:hidden;
         background:#000; border:1px solid rgba(0,229,255,.15);
       }
-      .vp-video-wrap video{
-        position:absolute; inset:0; width:100%; height:100%; object-fit:contain; background:#000;
+      .vp-video-wrap iframe{
+        position:absolute; inset:0; width:100%; height:100%; border:0;
       }
 
       .vp-actions{ display:flex; gap:10px; flex-wrap:wrap; }
@@ -95,8 +95,8 @@
 
     <script>
     (function(){
-      // لینک دانلود مستقیم ویدیو
-      const VIDEO_DIRECT_URL = "https://drive.google.com/uc?export=download&id=1WDQ1NpA86szMcdITKaI2kpVNiy7XhljG";
+      // لینک embed (preview) ویدیوی جدید
+      const VIDEO_EMBED_URL = "https://drive.google.com/file/d/1WDQ1NpA86szMcdITKaI2kpVNiy7XhljG/preview";
       const STORAGE_KEY = "banitwin_video_dismissed";
 
       function boot(){
@@ -148,19 +148,19 @@
         document.getElementById("vpPlay").onclick = () => {
           const wrap = document.getElementById("vpVideoWrap");
           
-          const video = document.createElement("video");
-          video.src = VIDEO_DIRECT_URL;
-          video.controls = true;
-          video.autoplay = true;
-          video.playsInline = true;
+          // استفاده از iframe برای پخش پایدار گوگل درایو
+          const iframe = document.createElement("iframe");
+          iframe.src = VIDEO_EMBED_URL;
+          iframe.allow = "autoplay; encrypted-media; fullscreen";
+          iframe.allowFullscreen = true;
           
-          wrap.appendChild(video);
+          wrap.appendChild(iframe);
           
           document.getElementById("vpActions").style.display = "none";
           document.getElementById("vpTextContent").style.display = "none";
           document.getElementById("vpDontShow").parentElement.style.display = "none";
           
-          // بزرگ‌تر شدن به سایز متعادل‌تر
+          // بزرگ‌تر شدن پنجره موقع پخش
           modal.style.maxWidth = "1000px"; 
           modal.style.padding = "16px";
         };
