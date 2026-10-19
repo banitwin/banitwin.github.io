@@ -60,8 +60,9 @@
         margin-bottom:18px; border-radius:10px; overflow:hidden;
         background:#000; border:1px solid rgba(0,229,255,.15);
       }
-      .vp-video-wrap iframe{
-        position:absolute; inset:0; width:100%; height:100%; border:0;
+      /* استایل برای تگ ویدیو */
+      .vp-video-wrap video{
+        position:absolute; inset:0; width:100%; height:100%; object-fit:contain; background:#000;
       }
 
       .vp-actions{ display:flex; gap:10px; flex-wrap:wrap; }
@@ -92,7 +93,8 @@
 
     <script>
     (function(){
-      const VIDEO_EMBED_URL = "https://drive.google.com/file/d/1syVnGJQQ0pxeqrVd4T8cCPIwUh_uz2BC/preview";
+      // لینک دانلود مستقیم گوگل درایو
+      const VIDEO_DIRECT_URL = "https://drive.google.com/uc?export=download&id=1syVnGJQQ0pxeqrVd4T8cCPIwUh_uz2BC";
       const STORAGE_KEY = "banitwin_video_dismissed";
 
       function boot(){
@@ -139,11 +141,13 @@
 
         document.getElementById("vpPlay").onclick = () => {
           const wrap = document.getElementById("vpVideoWrap");
-          const iframe = document.createElement("iframe");
-          iframe.src = VIDEO_EMBED_URL;
-          iframe.allow = "autoplay; encrypted-media; fullscreen";
-          iframe.allowFullscreen = true;
-          wrap.appendChild(iframe);
+          // ایجاد تگ ویدیو به جای iframe
+          const video = document.createElement("video");
+          video.src = VIDEO_DIRECT_URL;
+          video.controls = true;
+          video.autoplay = true;
+          
+          wrap.appendChild(video);
           document.getElementById("vpActions").style.display = "none";
         };
       }
