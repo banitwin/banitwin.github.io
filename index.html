@@ -26,6 +26,7 @@
         display:none; align-items:center; justify-content:center;
         z-index:2147483647; padding:20px;
         font-family:"Plus Jakarta Sans",system-ui,-apple-system,sans-serif;
+        transition: all 0.3s ease;
       }
       .vp-overlay.active{ display:flex; animation:vpFade .25s ease; }
       @keyframes vpFade{ from{opacity:0} to{opacity:1} }
@@ -33,10 +34,11 @@
       .vp-modal{
         background:#111820; color:#E0E0E0;
         border:1px solid rgba(0,229,255,.18);
-        border-radius:16px; max-width:680px; width:100%;
+        border-radius:16px; max-width:950px; width:100%; /* سایز بزرگ‌تر شد */
         padding:26px 26px 20px; position:relative;
         box-shadow:0 24px 70px rgba(0,0,0,.65), 0 0 0 1px rgba(0,229,255,.05);
         animation:vpRise .3s cubic-bezier(.2,.8,.2,1);
+        transition: max-width 0.3s ease;
       }
       @keyframes vpRise{ from{transform:translateY(14px);opacity:0} to{transform:none;opacity:1} }
 
@@ -44,15 +46,16 @@
         position:absolute; top:10px; right:14px;
         background:none; border:none; color:#6b8299;
         font-size:26px; line-height:1; cursor:pointer; transition:color .15s;
+        z-index:10;
       }
       .vp-close:hover{ color:#00E5FF; }
 
       .vp-modal h2{
-        margin:0 0 6px; font-size:1.3rem; font-weight:700;
+        margin:0 0 6px; font-size:1.4rem; font-weight:700;
         font-family:"Chakra Petch",system-ui,sans-serif;
         color:#fff; letter-spacing:.2px;
       }
-      .vp-modal p{ margin:0 0 18px; color:#8fa3b8; font-size:.93rem; }
+      .vp-modal p{ margin:0 0 18px; color:#8fa3b8; font-size:.95rem; }
 
       .vp-video-wrap:empty{ display:none; }
       .vp-video-wrap{
@@ -67,7 +70,7 @@
 
       .vp-actions{ display:flex; gap:10px; flex-wrap:wrap; }
       .vp-btn-primary,.vp-btn-secondary{
-        padding:10px 20px; border-radius:8px; font-size:.93rem;
+        padding:10px 20px; border-radius:8px; font-size:.95rem;
         cursor:pointer; border:1px solid transparent; font-weight:600;
         font-family:inherit; transition:.15s;
       }
@@ -93,8 +96,8 @@
 
     <script>
     (function(){
-      // لینک دانلود مستقیم گوگل درایو
-      const VIDEO_DIRECT_URL = "https://drive.google.com/uc?export=download&id=1syVnGJQQ0pxeqrVd4T8cCPIwUh_uz2BC";
+      // لینک دانلود مستقیم ویدیوی جدید
+      const VIDEO_DIRECT_URL = "https://drive.google.com/uc?export=download&id=1WDQ1NpA86szMcdITKaI2kpVNiy7XhljG";
       const STORAGE_KEY = "banitwin_video_dismissed";
 
       function boot(){
@@ -105,10 +108,12 @@
 
         root.innerHTML = `
           <div class="vp-overlay" id="vpOverlay">
-            <div class="vp-modal">
+            <div class="vp-modal" id="vpModal">
               <button class="vp-close" id="vpClose" aria-label="Close">&times;</button>
-              <h2>Want to watch the tutorial video?</h2>
-              <p>Learn how BaniTwin works in this short walkthrough.</p>
+              <div id="vpTextContent">
+                <h2>Want to watch the tutorial video?</h2>
+                <p>Learn how BaniTwin works in this short walkthrough.</p>
+              </div>
               <div class="vp-video-wrap" id="vpVideoWrap"></div>
               <div class="vp-actions" id="vpActions">
                 <button class="vp-btn-primary" id="vpPlay">▶ Watch Video</button>
@@ -123,6 +128,8 @@
         `;
 
         const overlay = document.getElementById("vpOverlay");
+        const modal = document.getElementById("vpModal");
+        
         setTimeout(() => overlay.classList.add("active"), 1200);
 
         function close(){
@@ -141,14 +148,24 @@
 
         document.getElementById("vpPlay").onclick = () => {
           const wrap = document.getElementById("vpVideoWrap");
-          // ایجاد تگ ویدیو به جای iframe
+          
+          // ایجاد تگ ویدیو
           const video = document.createElement("video");
           video.src = VIDEO_DIRECT_URL;
           video.controls = true;
           video.autoplay = true;
+          video.playsInline = true;
           
           wrap.appendChild(video);
+          
+          // مخفی کردن متن‌ها و دکمه‌ها
           document.getElementById("vpActions").style.display = "none";
+          document.getElementById("vpTextContent").style.display = "none";
+          document.getElementById("vpDontShow").parentElement.style.display = "none";
+          
+          // بزرگ‌تر کردن مودال وقتی ویدیو پلی می‌شه
+          modal.style.maxWidth = "1200px"; 
+          modal.style.padding = "16px";
         };
       }
 
