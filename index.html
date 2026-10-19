@@ -19,9 +19,9 @@
     <div id="root"></div>
     <div id="vp-root"></div>
 
-    <!-- دکمه کوچک برای بازگردانی پاپ‌آپ (وقتی کاربر قبلا بسته باشه) -->
-    <button id="vpResetBtn" title="Watch tutorial again" style="display:none; position:fixed; bottom:20px; right:20px; z-index:9999; background:#111820; border:1px solid rgba(0,229,255,.3); color:#00E5FF; padding:10px 15px; border-radius:50px; cursor:pointer; font-family:system-ui; font-weight:600; box-shadow:0 4px 15px rgba(0,0,0,0.5); transition:all 0.2s ease;">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:6px;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+    <!-- دکمه کوچک برای بازگردانی پاپ‌آپ (سایز و فونت ۲۰ درصد کوچیک‌تر شد) -->
+    <button id="vpResetBtn" title="Watch tutorial again" style="display:none; position:fixed; bottom:20px; right:20px; z-index:9999; background:#111820; border:1px solid rgba(0,229,255,.3); color:#00E5FF; padding:8px 12px; border-radius:50px; cursor:pointer; font-family:system-ui; font-weight:600; font-size:12px; box-shadow:0 4px 15px rgba(0,0,0,0.5); transition:all 0.2s ease; align-items:center; gap:5px;">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
       Watch Tutorial
     </button>
 
@@ -107,9 +107,8 @@
       const resetBtn = document.getElementById("vpResetBtn");
 
       function boot(){
-        // اگر قبلا پاپ آپ رو بسته، دکمه کوچیک رو نشون بده
         if (localStorage.getItem(STORAGE_KEY)) {
-          resetBtn.style.display = "block";
+          resetBtn.style.display = "flex"; // flex برای هم‌ترازی آیکون و متن
           return;
         }
 
@@ -145,7 +144,7 @@
         function close(){
           if (document.getElementById("vpDontShow").checked){
             localStorage.setItem(STORAGE_KEY, "1");
-            resetBtn.style.display = "block"; // نمایش دکمه کوچک بعد از بستن
+            resetBtn.style.display = "flex";
           }
           overlay.classList.remove("active");
         }
@@ -177,15 +176,14 @@
         };
       }
 
-      // عملکرد دکمه کوچک برای بازگردانی
       resetBtn.onclick = () => {
-        localStorage.removeItem(STORAGE_KEY); // پاک کردن حافظه
-        resetBtn.style.display = "none"; // مخفی کردن دکمه کوچک
-        document.getElementById("vp-root").innerHTML = ""; // پاک کردن کدهای قبلی
-        boot(); // اجرای مجدد پاپ آپ
+        localStorage.removeItem(STORAGE_KEY);
+        resetBtn.style.display = "none";
+        document.getElementById("vp-root").innerHTML = "";
+        boot();
       };
 
-      // هاور روی دکمه کوچک
+      // تغییر رنگ در هاور
       resetBtn.onmouseenter = () => { resetBtn.style.background = "#00E5FF"; resetBtn.style.color = "#06121a"; };
       resetBtn.onmouseleave = () => { resetBtn.style.background = "#111820"; resetBtn.style.color = "#00E5FF"; };
 
