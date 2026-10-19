@@ -34,7 +34,7 @@
       .vp-modal{
         background:#111820; color:#E0E0E0;
         border:1px solid rgba(0,229,255,.18);
-        border-radius:16px; max-width:950px; width:100%; /* سایز بزرگ‌تر شد */
+        border-radius:16px; max-width:850px; width:100%; /* سایز متعادل شد */
         padding:26px 26px 20px; position:relative;
         box-shadow:0 24px 70px rgba(0,0,0,.65), 0 0 0 1px rgba(0,229,255,.05);
         animation:vpRise .3s cubic-bezier(.2,.8,.2,1);
@@ -63,7 +63,6 @@
         margin-bottom:18px; border-radius:10px; overflow:hidden;
         background:#000; border:1px solid rgba(0,229,255,.15);
       }
-      /* استایل برای تگ ویدیو */
       .vp-video-wrap video{
         position:absolute; inset:0; width:100%; height:100%; object-fit:contain; background:#000;
       }
@@ -96,7 +95,7 @@
 
     <script>
     (function(){
-      // لینک دانلود مستقیم ویدیوی جدید
+      // لینک دانلود مستقیم ویدیو
       const VIDEO_DIRECT_URL = "https://drive.google.com/uc?export=download&id=1WDQ1NpA86szMcdITKaI2kpVNiy7XhljG";
       const STORAGE_KEY = "banitwin_video_dismissed";
 
@@ -149,7 +148,6 @@
         document.getElementById("vpPlay").onclick = () => {
           const wrap = document.getElementById("vpVideoWrap");
           
-          // ایجاد تگ ویدیو
           const video = document.createElement("video");
           video.src = VIDEO_DIRECT_URL;
           video.controls = true;
@@ -158,13 +156,12 @@
           
           wrap.appendChild(video);
           
-          // مخفی کردن متن‌ها و دکمه‌ها
           document.getElementById("vpActions").style.display = "none";
           document.getElementById("vpTextContent").style.display = "none";
           document.getElementById("vpDontShow").parentElement.style.display = "none";
           
-          // بزرگ‌تر کردن مودال وقتی ویدیو پلی می‌شه
-          modal.style.maxWidth = "1200px"; 
+          // بزرگ‌تر شدن به سایز متعادل‌تر
+          modal.style.maxWidth = "1000px"; 
           modal.style.padding = "16px";
         };
       }
