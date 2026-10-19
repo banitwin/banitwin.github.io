@@ -19,13 +19,13 @@
     <div id="root"></div>
     <div id="vp-root"></div>
 
-    <!-- دکمه کوچک پایین صفحه -->
+    <!-- دکمه کوچک پایین صفحه (در ابتدا مخفی است) -->
     <button id="vpResetBtn" title="Watch tutorial" style="display:none; position:fixed; bottom:20px; right:20px; z-index:9999; background:#111820; border:1px solid rgba(0,229,255,.3); color:#00E5FF; padding:8px 12px; border-radius:50px; cursor:pointer; font-family:system-ui; font-weight:600; font-size:12px; box-shadow:0 4px 15px rgba(0,0,0,0.5); transition:all 0.2s ease; align-items:center; gap:5px;">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
       Watch Tutorial
     </button>
 
-    <!-- کادر کوچک (مینی پاپ آپ) که با کلیک روی دکمه باز میشه -->
+    <!-- کادر کوچک (مینی پاپ آپ) -->
     <div id="vpMiniCard" style="display:none; position:fixed; bottom:70px; right:20px; z-index:9998; background:#111820; border:1px solid rgba(0,229,255,.2); border-radius:12px; padding:16px; width:280px; box-shadow:0 10px 30px rgba(0,0,0,0.6); font-family:'Plus Jakarta Sans',sans-serif; animation:vpFade 0.3s ease;">
       <button id="vpMiniClose" style="position:absolute; top:8px; right:10px; background:none; border:none; color:#6b8299; font-size:18px; cursor:pointer;">&times;</button>
       <h3 style="margin:0 0 6px; font-size:14px; color:#fff; font-family:'Chakra Petch',sans-serif; font-weight:600;">Watch Tutorial</h3>
@@ -115,9 +115,9 @@
       const resetBtn = document.getElementById("vpResetBtn");
       const miniCard = document.getElementById("vpMiniCard");
 
-      // تابع برای ساختن و نمایش پاپ‌آپ اصلی (بزرگ)
+      // تابع نمایش پاپ‌آپ اصلی
       function showMainPopup() {
-        miniCard.style.display = "none"; // بستن کارت کوچیک
+        miniCard.style.display = "none"; // کارت کوچیک رو ببند
         const root = document.getElementById("vp-root");
         if (!root) return;
 
@@ -148,11 +148,13 @@
         setTimeout(() => overlay.classList.add("active"), 50);
 
         function close(){
+          // اگر تیک زده بود، برای دفعه بعد ذخیره کن
           if (document.getElementById("vpDontShow").checked){
             localStorage.setItem(STORAGE_KEY, "1");
-            resetBtn.style.display = "flex";
           }
           overlay.classList.remove("active");
+          // در هر صورت (چه تیک زده باشه چه "شاید بعدا" رو بزنه)، دکمه پایین ظاهر بشه
+          resetBtn.style.display = "flex"; 
         }
 
         document.getElementById("vpClose").onclick = close;
@@ -182,22 +184,23 @@
         };
       }
 
-      // شروع اولیه
+      // منطق اولیه هنگام لود سایت
       function boot(){
+        // اگر کاربر قبلا تیک "دیگه نشون نده" رو زده بود
         if (localStorage.getItem(STORAGE_KEY)) {
           resetBtn.style.display = "flex"; // فقط دکمه کوچیک رو نشون بده
-          return;
+        } else {
+          // کاربر جدید: پاپ آپ بزرگ رو نشون بده
+          setTimeout(showMainPopup, 1200);
         }
-        // اگر کاربر جدید بود، پاپ آپ اصلی رو نشون بده
-        setTimeout(showMainPopup, 1200);
       }
 
-      // وقتی روی دکمه پایین کلیک میشه، کارت کوچیک باز بشه
+      // وقتی روی دکمه پایین کلیک میشه، کارت کوچیک باز/بسته بشه
       resetBtn.onclick = () => {
         if (miniCard.style.display === "block") {
-            miniCard.style.display = "none"; // اگر بازه، ببندش
+            miniCard.style.display = "none"; 
         } else {
-            miniCard.style.display = "block"; // بازش کن
+            miniCard.style.display = "block"; 
         }
       };
 
@@ -206,7 +209,7 @@
         miniCard.style.display = "none";
       };
 
-      // وقتی روی Play در کارت کوچیک کلیک میشه، پاپ آپ اصلی رو باز کن
+      // کلیک روی Play در کارت کوچیک
       document.getElementById("vpMiniPlay").onclick = () => {
         showMainPopup();
       };
